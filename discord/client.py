@@ -109,7 +109,7 @@ class WebSocket(WebSocketBaseClient):
     def received_message(self, msg):
         self.dispatch('socket_raw_receive', msg)
         if msg.is_binary:
-            response = json.loads(str( zlib.decompress( msg ) ))
+            response = json.loads(zlib.decompress( msg.data ).decode())
         else:
             response = json.loads(str( msg ))
         log.debug('WebSocket Event: {}'.format(response))
